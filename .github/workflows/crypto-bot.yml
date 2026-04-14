@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TZ: Europe/Rome
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'  # ✅ Opt-in a Node.js 24
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: actions/setup-python@v5.3.0
+      - uses: actions/checkout@v4.2.2  # ✅ Versione compatibile Node.js 24
+      - uses: actions/setup-python@v5.4.0  # ✅ Versione compatibile Node.js 24
         with:
           python-version: '3.11'
           cache: 'pip'
