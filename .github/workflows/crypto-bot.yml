@@ -1,0 +1,26 @@
+name: Crypto Hourly Bot
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Ogni ora (trigger UTC)
+  workflow_dispatch:      # Esecuzione manuale per test
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Rome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run bot
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          BTC_ALERT_THRESHOLD: ${{ secrets.BTC_ALERT_THRESHOLD }}
+          VS_CURRENCY: ${{ secrets.VS_CURRENCY || 'eur' }}
+        run: python script.py
