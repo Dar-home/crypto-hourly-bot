@@ -15,8 +15,8 @@ def generate_sparkline(prices, width=10):
     return "".join(spark[::step][:width])
 
 def send_telegram(text, is_alert=False):
-    token = os.environ.get("8760975369:AAE_GPD0Q1rl9AZd2VSYpJ6BQLHgcw03sdg")
-    chat_id = os.environ.get("256759604")
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
     if not token or not chat_id:
         raise ValueError("Mancano TELEGRAM_BOT_TOKEN o TELEGRAM_CHAT_ID")
     url = f"https://api.telegram.org/bot{token}/sendMessage"
