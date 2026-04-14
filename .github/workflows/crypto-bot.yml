@@ -2,19 +2,22 @@ name: Crypto Hourly Bot
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Ogni ora (trigger UTC)
-  workflow_dispatch:      # Esecuzione manuale per test
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     env:
       TZ: Europe/Rome
+      # ✅ Opt-in a Node.js 24 per evitare warning futuri
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v4.2.2  # ✅ Versione patch aggiornata
+      - uses: actions/setup-python@v5.3.0  # ✅ Versione patch aggiornata
         with:
           python-version: '3.11'
+          cache: 'pip'  # ✅ Cache delle dipendenze per run più veloci
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run bot
