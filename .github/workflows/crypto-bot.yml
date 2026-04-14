@@ -1,28 +1,24 @@
 name: Crypto Hourly Bot
-
 on:
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
-
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     env:
       TZ: Europe/Rome
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'  # ✅ Opt-in a Node.js 24
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
     steps:
-      - uses: actions/checkout@v4.2.2  # ✅ Versione compatibile Node.js 24
-      - uses: actions/setup-python@v5.4.0  # ✅ Versione compatibile Node.js 24
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-python@v5.4.0
         with:
           python-version: '3.11'
           cache: 'pip'
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run bot
+      - run: pip install -r requirements.txt
+      - run: python script.py
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           BTC_ALERT_THRESHOLD: ${{ secrets.BTC_ALERT_THRESHOLD }}
           VS_CURRENCY: ${{ secrets.VS_CURRENCY || 'eur' }}
-        run: python script.py
